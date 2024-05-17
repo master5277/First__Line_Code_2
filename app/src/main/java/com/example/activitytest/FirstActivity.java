@@ -2,7 +2,12 @@ package com.example.activitytest;
 
 import static android.widget.Toast.makeText;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.net.Uri;
+import android.nfc.Tag;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -18,6 +24,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class FirstActivity extends AppCompatActivity {
 
+    public static final String TAG = "FirstActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,7 +33,42 @@ public class FirstActivity extends AppCompatActivity {
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                makeText(FirstActivity.this, "You clicked Button 1", Toast.LENGTH_SHORT).show();
+//                makeText(FirstActivity.this, "You clicked Button 1", Toast.LENGTH_SHORT).show();
+              //显式Intent:
+                /*
+                 Intent intent = new Intent(FirstActivity.this,SecondActivity.class);
+                startActivity(intent);
+                 */
+
+                //打开浏览器
+//                Intent intent = new Intent(Intent.ACTION_VIEW);
+//                intent.setData(Uri.parse("http://www.baidu.com"));
+//                startActivity(intent);
+
+                //调用系统拨号界面
+//                Intent intent = new Intent(Intent.ACTION_DIAL);
+//                intent.setData(Uri.parse("tel.10086"));
+//                startActivity(intent);
+
+                //向下一个活动传递信息
+//                String data = "Hello SecondActivity";
+//                Intent intent = new Intent(FirstActivity.this,SecondActivity.class);
+//                intent.putExtra("extra_data",data);
+//                startActivity(intent);
+
+                //接收来自SecondActivity的信息
+                Intent intent = new Intent(FirstActivity.this,SecondActivity.class);
+                startActivityForResult(intent,1);
+
+            }
+        });
+        Button button2 = (Button) findViewById(R.id.button_2);
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent("com.example.activitytest.ACTION.START");
+                intent.addCategory("com.example.activitytest.MY_CATEGORY");
+                startActivity(intent);
             }
         });
 
@@ -50,8 +92,20 @@ public class FirstActivity extends AppCompatActivity {
         return true;
     }
 
-
-
-
-
+    @SuppressLint("MissingSuperCall")
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        switch (requestCode)
+        {
+            case 1:
+                if (resultCode==RESULT_OK)
+                {
+                    String returnedData = data.getStringExtra("data_return");
+                    Log.d(TAG, "onActivityResult: "+returnedData);
+                }
+                break;
+            default:
+                break;
+        }
+    }
 }

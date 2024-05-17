@@ -55,3 +55,44 @@ JDK17版本以下都可以，只有17不行，因为JDK17中switch语句的条�
 
 ②
 
+当下面标签中<data>标签，android:scheme为http时报错；
+
+```
+<activity
+            android:name=".ThirdActivity"
+            android:exported="true" >
+            <intent-filter>
+                <data android:scheme="http"/>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+```
+
+改为其他则不报错：
+
+```java
+<intent-filter>
+                <data android:scheme="xl"/>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+</intent-filter>
+```
+
+③
+
+```
+//调用系统拨号界面
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel.10086"));
+                startActivity(intent);
+```
+
+闪退
+
+参考链接:[Android 实现打电话出现 No Activity found to handle Intent异常-CSDN博客](https://blog.csdn.net/weixin_43889841/article/details/92838665)
+
+![1715929927429](C:\Users\23241\AppData\Roaming\Typora\typora-user-images\1715929927429.png)
+
+真机测试；
+
