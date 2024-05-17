@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/mune_enter"
+        android:orderInCategory="100"
+        android:title="选项一"
+        app:showAsAction="never"/> <!-- 主要针对这个菜单的显示 -->
+    <item
+        android:id="@+id/mune_setting"
+        android:orderInCategory="100"
+        android:title="选项二"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/mune_out"
+        android:orderInCategory="100"
+        android:title="选项三"
+        app:showAsAction="never"/>
+</menu>
